@@ -1,12 +1,12 @@
 Summary:	Call-graph profiling
 Summary(pl):	Profilowanie przy u¿yciu wykresów wywo³añ
 Name:		valgrind-callgrind
-Version:	0.9.9
+Version:	0.9.10
 Release:	1
 License:	GPL
 Group:		Development/Tools
 Source0:	http://kcachegrind.sourceforge.net/callgrind-%{version}.tar.gz
-# Source0-md5:	4a245112d471b4f94bba8080a5bf5ba7
+# Source0-md5:	ddfd883491f7d564dca15a2e9336854f
 Patch0:		%{name}-pld-fuckup.patch
 URL:		http://kcachegrind.sourceforge.net/cgi-bin/show.cgi/KcacheGrindDownload
 BuildRequires:	autoconf
