@@ -1,92 +1,72 @@
-diff -ruN callgrind-0.9.9./configure.in callgrind-0.9.9/configure.in
---- callgrind-0.9.9./configure.in	2004-09-04 12:18:06.000000000 +0200
-+++ callgrind-0.9.9/configure.in	2004-09-04 12:21:08.768403272 +0200
-@@ -8,10 +8,6 @@
- # set default PREFIX to existing valgrind installation
+diff -ruN callgrind-0.9.11./configure.in callgrind-0.9.11/configure.in
+--- callgrind-0.9.11./configure.in	2005-04-02 13:50:28.000000000 +0200
++++ callgrind-0.9.11/configure.in	2005-04-02 13:54:48.116323688 +0200
+@@ -7,19 +7,7 @@
+ 
+ # set default PREFIX / check given PREFIX
  AC_MSG_CHECKING([for valgrind installation])
- vg_exec=`which valgrind`
--if test "x$vg_exec" = "x"; then
--  AC_MSG_RESULT([not found in PATH])
--  AC_MSG_ERROR([Needs Valgrind 2.0.x/2.2.x])
+-if test "x$prefix" = "xNONE"; then
+-  vg_exec=`which valgrind`
+-  if test "x$vg_exec" = "x"; then
+-    AC_MSG_RESULT([not found in $PATH])
+-    AC_MSG_ERROR([Please install Valgrind])
+-  fi
+-else
+-  vg_exec=`which $prefix/bin/valgrind`
+-  if test "x$vg_exec" = "x"; then
+-    AC_MSG_RESULT([not found in $prefix/bin])
+-    AC_MSG_ERROR([Valgrind has to be installed in the specified prefix!])
+-  fi
 -fi
++vg_exec=`which valgrind`
  vg_binpath=`dirname $vg_exec`
  ac_default_prefix=`dirname $vg_binpath`
- AC_MSG_RESULT([in ${ac_default_prefix}])
-@@ -35,41 +31,12 @@
- AC_SUBST(CT_INCDIR)
+ if test "x$prefix" = "xNONE"; then
+@@ -40,7 +28,7 @@
+ CT_OPTIONS="--tool=callgrind"
+ use_pkg_config="no"
+ AC_MSG_CHECKING([for valgrind version])
+-vg_version=`$prefix/bin/valgrind --version`
++vg_version="valgrind-2.4.0"
+ case "${vg_version}" in
+     valgrind-2.0.*)
+ 	CT_OPTIONS="--skin=callgrind"
+@@ -97,38 +85,6 @@
+ AC_MSG_RESULT([${CFLAGS}])
  
- # check if there is a vg_skin.h installed
--AC_MSG_CHECKING([if vg_skin.h is available])
--CFLAGS="-I $VG_INCDIR"
--AC_TRY_COMPILE(, [
--#include "vg_skin.h"
--int main() { return 0 ; }
--],
+ 
+-# check if there is a vg_skin.h installed
+-AC_MSG_CHECKING([if compiling a valgrind tool is possible])
+-AC_TRY_COMPILE(
+-[#include "vg_skin.h"],
+-[],
 -[
 -# No need for additional directory
--CT_INCDIR=""
 -AC_MSG_RESULT([Yes])
 -], [
--AC_MSG_ERROR([No. Needs header files from Valgrind (2.0.x/2.2.x).
--Perhaps a valgrind-dev package is missing in your installation?])
+-AC_MSG_ERROR([No. Is a valgrind-dev package missing?])
 -])
- 
- # Check for Valgrind version
- AC_SUBST(CT_OPTIONS)
- AC_MSG_CHECKING([for valgrind version])
--vg_version=`valgrind --version`
--case "${vg_version}" in
--    valgrind-2.0.*)
--	AC_MSG_RESULT([${vg_version} (stable)])
--	CT_OPTIONS="--skin=callgrind"
--	;;
--    valgrind-2.[135].*)
--	AC_MSG_RESULT([${vg_version} (unstable)])
--	AC_DEFINE(VG_UNSTABLE,1,[Unstable Valgrind])
--        vg_unstable="yes"
--	CT_OPTIONS="--tool=callgrind"
--	;;
--    *)
--	AC_MSG_RESULT([${vg_version}])
--	CT_OPTIONS="--tool=callgrind"
--	;;
--esac
-+AC_MSG_RESULT([${vg_version}])
-+CT_OPTIONS="--tool=callgrind"
- 
- # check if we support skin version of installed valgrind
- #
-@@ -77,33 +44,6 @@
- # are *not* reliable, so we define UNSTABLE to distinguish
- # unstable VG releases from stable ones reusing versions.
- 
--AC_MSG_CHECKING([if skin version is supported])
--CFLAGS="-I $VG_INCDIR"
--if test "x$vg_unstable" = "x"; then
--	AC_TRY_RUN([
--	#include "vg_skin.h"
--	int main() { return (VG_CORE_INTERFACE_MAJOR_VERSION > 6) ? 1:0; }
--	], [
--	AC_MSG_RESULT([Yes])
--	], [
--	AC_MSG_ERROR([The installed stable Valgrind is too new for this package. Please update this package!])
--	], [
--	AC_MSG_RESULT([Assuming yes (cross-compiling)])
--	])
--else
--	AC_TRY_RUN([
--	#include "vg_skin.h"
--	int main() { return (VG_CORE_INTERFACE_MAJOR_VERSION > 6) ? 1:0; }
--	], [
--	AC_MSG_RESULT([Yes])
--	], [
--	AC_MSG_ERROR([The installed unstable Valgrind is too new for this package. Please update this package!])
--	], [
--	AC_MSG_RESULT([Assuming yes (cross-compiling)])
--	])
--fi
 -
 -
- # copied from configure.in of valgrind distribution
- # does this compiler support -mpreferred-stack-boundary=2 ?
- AC_MSG_CHECKING([if gcc accepts -mpreferred-stack-boundary])
+-# check if we support skin version of installed valgrind
+-#
+-# Note that versions used in VG releases 2.y.x, with y odd,
+-# are *not* reliable, so we define UNSTABLE to distinguish
+-# unstable VG releases from stable ones reusing versions.
+-
+-AC_MSG_CHECKING([if tool API version is supported])
+-AC_TRY_RUN([
+-#include "vg_skin.h"
+-int main() { return (VG_CORE_INTERFACE_MAJOR_VERSION > 7) ? 1:0; }
+-], [
+-AC_MSG_RESULT([Yes])
+-], [
+-AC_MSG_ERROR([Installed valgrind version too new. Please update this package!])
+-], [
+-AC_MSG_RESULT([Assuming yes (cross-compiling)])
+-])
+-
+-
+ AC_OUTPUT(
+ 	Makefile              \
+ 	src/Makefile          \
