@@ -11,7 +11,9 @@ Patch0:		%{name}-pld-fuckup.patch
 URL:		http://kcachegrind.sourceforge.net/cgi-bin/show.cgi/KcacheGrindDownload
 BuildRequires:	autoconf
 BuildRequires:	automake
+BuildRequires:	pkgconfig
 BuildRequires:	valgrind >= 2.1.2
+BuildRequires:	which
 Requires:	valgrind
 Obsoletes:	valgrind-calltree
 ExclusiveArch:	%{ix86}
