@@ -1,22 +1,22 @@
 Summary:	Call-graph profiling
 Summary(pl):	Profilowanie przy u¿yciu wykresów wywo³añ
 Name:		valgrind-callgrind
-Version:	0.9.11
-Release:	2
+Version:	0.10.0
+Release:	1
 License:	GPL
 Group:		Development/Tools
 Source0:	http://kcachegrind.sourceforge.net/callgrind-%{version}.tar.gz
-# Source0-md5:	a4c41e6b389a14830191f11a92ed8b91
+# Source0-md5:	3bd2afd50fde7db4bd5a59dcb412d5e7
 Patch0:		%{name}-pld-fuckup.patch
 URL:		http://kcachegrind.sourceforge.net/cgi-bin/show.cgi/KcacheGrindDownload
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	pkgconfig
-BuildRequires:	valgrind >= 2.1.2
+BuildRequires:	valgrind >= 3.0.1
 BuildRequires:	which
 Requires:	valgrind
 Obsoletes:	valgrind-calltree
-ExclusiveArch:	%{ix86}
+ExclusiveArch:	%{ix86} %{x8664}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -33,7 +33,7 @@ profilowania przy u¿yciu wykresów wywo³añ.
 
 %prep
 %setup -q -n callgrind-%{version}
-%patch0 -p1
+#%patch0 -p1
 
 %build
 %{__aclocal}
@@ -49,15 +49,12 @@ install -d $RPM_BUILD_ROOT%{_mandir}/man1
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-install man/*.1 $RPM_BUILD_ROOT%{_mandir}/man1
-
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc AUTHORS README TODO docs/*.html
+%doc AUTHORS ChangeLog README
 %attr(755,root,root) %{_bindir}/*
-%{_mandir}/man1/*
 %{_includedir}/*
 %{_libdir}/valgrind/*
