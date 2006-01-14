@@ -57,4 +57,4 @@ rm -rf $RPM_BUILD_ROOT
 %doc AUTHORS ChangeLog README
 %attr(755,root,root) %{_bindir}/*
 %{_includedir}/*
-%{_libdir}/valgrind/*-linux/*
+%attr(755,root,root) %{_libdir}/valgrind/*-linux/*
