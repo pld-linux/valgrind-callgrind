@@ -1,5 +1,5 @@
 Summary:	Call-graph profiling
-Summary(pl.UTF-8):   Profilowanie przy użyciu wykresów wywołań
+Summary(pl.UTF-8):	Profilowanie przy użyciu wykresów wywołań
 Name:		valgrind-callgrind
 Version:	0.10.1
 Release:	1
