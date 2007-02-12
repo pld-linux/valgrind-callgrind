@@ -1,5 +1,5 @@
 Summary:	Call-graph profiling
-Summary(pl):	Profilowanie przy uøyciu wykresÛw wywo≥aÒ
+Summary(pl.UTF-8):   Profilowanie przy u≈ºyciu wykres√≥w wywo≈Ça≈Ñ
 Name:		valgrind-callgrind
 Version:	0.10.1
 Release:	1
@@ -25,11 +25,11 @@ system for x86-linux. It is based on the cachegrind skin, a cache
 simulator from the valgrind core package. It adds call-graph
 profiling.
 
-%description -l pl
-To jest wtyczka dla Valgrinda - systemu strojenia programÛw dla
+%description -l pl.UTF-8
+To jest wtyczka dla Valgrinda - systemu strojenia program√≥w dla
 Linuksa na platformie x86. Jest oparty na cachegrind - symulatorze
-cache do≥±czonym do pakietu valgrind. calltree dodaje moøliwo∂Ê
-profilowania przy uøyciu wykresÛw wywo≥aÒ.
+cache do≈ÇƒÖczonym do pakietu valgrind. calltree dodaje mo≈ºliwo≈õƒá
+profilowania przy u≈ºyciu wykres√≥w wywo≈Ça≈Ñ.
 
 %prep
 %setup -q -n callgrind-%{version}
